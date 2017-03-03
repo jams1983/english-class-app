@@ -23,7 +23,8 @@ puts '1 Subject added to the database'
   Group.create!(
     name: "Group #{index}",
     subject_id: subject.id,
-    lesson_price: "50000"
+    lesson_price: "50000",
+    lesson_duration_in_minutes: 90
   )
 end
 puts "3 groups added to the database"
