@@ -1,0 +1,22 @@
+<h1><%= @subject.name %> groups</h1>
+
+<table class="table table-hover table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Name</td>
+      <th>Students</td>
+      <th>Lesson price</td>
+      <th>Lesson duration</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @groups.each do |group| %>
+      <tr>
+        <td><%= group.name %></td>
+        <td><%= group.users.count %></td>
+        <td><%= group.lesson_price %></td>
+        <td><%= group.lesson_duration_in_minutes %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
