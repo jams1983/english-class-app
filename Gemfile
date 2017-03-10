@@ -33,3 +33,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+group :test do
+  gem 'database_cleaner', '~> 1.5.3'
+  gem 'shoulda-matchers', '~> 3.1'
+end

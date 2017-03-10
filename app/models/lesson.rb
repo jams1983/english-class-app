@@ -5,6 +5,7 @@ class Lesson < ApplicationRecord
   has_many :attendees, inverse_of: :lesson
 
   validates :date, presence: true
+  validates :duration, presence: true
 
   accepts_nested_attributes_for :attendees
 

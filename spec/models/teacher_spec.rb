@@ -1,5 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Teacher, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should have_many :groups }
+  it { should have_many :price_details }
+  it { should have_many :lessons }
 end
