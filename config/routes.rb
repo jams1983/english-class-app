@@ -5,8 +5,7 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: "home#index"
 
-  resources :subjects, only: [:index] do
-    resources :groups, only: [:index]
+  resources :groups, only: [:index, :show] do
+    resources :lessons, only: [:index, :new, :create, :show]
   end
-
 end

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Koombea Academy</title>
+    <title>Koombea English classes</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -19,17 +19,13 @@
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <%= link_to "Koombea Academy", root_path, class: "navbar-brand" %>
+          <%= link_to "Koombea", root_path, class: "navbar-brand" %>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li>
-              <a href="#">Schedule</a>
-            </li>
-            <li>
-              <a href="#">Subjects</a>
-            </li>
+            <li><%= link_to "Groups", groups_path %></li>
+            <li><%= link_to "Billing", '#' %></li>
           </ul>
           <ul class="pull-right session-section nav navbar-nav">
             <% if current_user %>

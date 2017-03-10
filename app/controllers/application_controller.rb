@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
       root_path
     end
   end
+
+  def current_user_groups
+    current_user.groups.includes(:students)
+  end
 end

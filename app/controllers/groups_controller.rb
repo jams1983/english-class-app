@@ -1,7 +1,13 @@
 class GroupsController < ApplicationController
 
+  before_action :authenticate_user!, scope: :teacher
+
   def index
-    @subject = current_user.subjects.find(params[:subject_id])
-    @groups = @subject.groups
+    @groups = current_user_groups
   end
+
+  def show
+    @group = current_user_groups.find(params[:id])
+  end
+
 end

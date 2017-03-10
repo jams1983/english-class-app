@@ -1,30 +1,77 @@
 password = "secret123"
 
+attendance_options = [
+  {description: "present", bill: true},
+  {description: "absent", bill: true},
+  {description: "on vacation", bill: true}
+]
+
+attendance_options.each do |option|
+  AttendanceOption.create!(option)
+end
+p "Attendance options created."
+
 Admin.create!(
   first_name: "Admin",
   last_name: "Admin",
   email: "admin@akademy.com",
   password: password
 )
-puts '1 Admin added to the database'
+p "Admin created."
 
 teacher = Teacher.create!(
-  first_name: "John",
-  last_name: "Doe",
-  email: "john.doe@akademy.com",
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  email: "teacher@akademy.com",
   password: password
 )
-puts '1 Teacher added to the database'
+p "Teacher created."
 
-subject = Subject.create!(name: "English", teacher_id: teacher.id)
-puts '1 Subject added to the database'
-
-3.times do |index|
-  Group.create!(
-    name: "Group #{index}",
-    subject_id: subject.id,
-    lesson_price: "50000",
-    lesson_duration_in_minutes: 90
+30.times do
+  Student.create!(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    email: Faker::Internet.email,
+    password: password
   )
 end
-puts "3 groups added to the database"
+p "30 students created."
+
+groups = []
+3.times do |index|
+  groups << Group.create!(
+    name: "Group #{index}",
+    teacher_id: teacher.id,
+    students: Student.all.sample(Random.rand(7) + 1)
+  )
+end
+p "3 groups created."
+
+7.times do |index|
+  PriceDetail.create!(
+    teacher_id: teacher.id,
+    students_amount: index + 1,
+    price: 100000 * (1.to_f/(index+1))
+  )
+end
+p "7 price details created."
+
+lessons = []
+20.times do
+  lessons << Lesson.create!(
+    group_id: groups.sample.id,
+    duration: 90,
+    date: Date.today
+  )
+end
+p "20 lessons created."
+
+lessons.each do |lesson|
+  lesson.group.students.each do |student|
+    Attendee.create!(
+      lesson_id: lesson.id,
+      attendance_option_id: AttendanceOption.all.sample.id,
+      student_id: student.id
+    )
+  end
+end
