@@ -42,6 +42,17 @@ RailsAdmin.config do |config|
     # history_show
   end
 
+  config.model Group do
+
+    edit do
+      exclude_fields :lessons
+      field :students do
+        nested_form false
+      end
+    end
+
+  end
+
   config.model PriceDetail do
 
     list do
@@ -54,7 +65,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  [User, Teacher, Admin, Student].each do |imodel|
+  [User, Teacher, Student].each do |imodel|
 
     config.model imodel do
 
@@ -74,7 +85,6 @@ RailsAdmin.config do |config|
         field :last_name
         field :email
         field :password
-        field :password_confirmation
       end
     end
   end

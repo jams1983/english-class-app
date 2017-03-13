@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   resources :groups, only: [:index, :show] do
     resources :lessons, only: [:index, :new, :create, :show]
+    get :invoice
   end
 end

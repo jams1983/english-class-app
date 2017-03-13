@@ -20,6 +20,10 @@ class LessonsController < ApplicationController
     end
   end
 
+  def show
+    @lesson = group.lessons.includes(attendees: [:student, :attendance_option]).find(params[:id])
+  end
+
   private
 
   def attendance_options

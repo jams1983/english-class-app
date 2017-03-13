@@ -3,7 +3,7 @@ password = "secret123"
 attendance_options = [
   {description: "present", bill: true},
   {description: "absent", bill: true},
-  {description: "on vacation", bill: true}
+  {description: "on vacation", bill: false}
 ]
 
 attendance_options.each do |option|
@@ -12,8 +12,6 @@ end
 p "Attendance options created."
 
 Admin.create!(
-  first_name: "Admin",
-  last_name: "Admin",
   email: "admin@akademy.com",
   password: password
 )
@@ -39,10 +37,12 @@ p "30 students created."
 
 groups = []
 3.times do |index|
+  sample_students = students.sample(Random.rand(7) + 1)
+  students -= sample_students
   groups << Group.create!(
     name: "Group #{index}",
     teacher_id: teacher.id,
-    students: Student.all.sample(Random.rand(7) + 1)
+    students: sample_students
   )
 end
 p "3 groups created."

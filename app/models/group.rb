@@ -6,4 +6,6 @@ class Group < ApplicationRecord
   has_many :lessons
 
   validates :name, presence: true
+
+  accepts_nested_attributes_for :students
 end
