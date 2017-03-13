@@ -41,4 +41,41 @@ RailsAdmin.config do |config|
     # history_index
     # history_show
   end
+
+  config.model PriceDetail do
+
+    list do
+      exclude_fields :id
+      field :price do
+        pretty_value do
+          bindings[:view].number_to_currency(value, precision: 0)
+        end
+      end
+    end
+  end
+
+  [User, Teacher, Admin, Student].each do |imodel|
+
+    config.model imodel do
+
+      object_label_method do
+        :full_name
+      end
+
+      list do
+        field :first_name
+        field :last_name
+        field :email
+        field :last_sign_in_at
+      end
+
+      edit do
+        field :first_name
+        field :last_name
+        field :email
+        field :password
+        field :password_confirmation
+      end
+    end
+  end
 end
