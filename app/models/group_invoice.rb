@@ -15,7 +15,7 @@ class GroupInvoice
   end
 
   def duration
-    @duration ||= group.lessons.inject(0) do |duration, lesson|
+    @duration ||= group_lessons.inject(0) do |duration, lesson|
       duration += lesson.duration
     end
   end
@@ -24,6 +24,12 @@ class GroupInvoice
     @student_invoices ||= group.students.inject([]) do |invoices, student|
       invoices << StudentInvoice.new(student, start_date, end_date)
     end
+  end
+
+  private
+
+  def group_lessons
+    group.lessons.where(date: (start_date..end_date))
   end
 
 end

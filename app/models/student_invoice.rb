@@ -11,7 +11,7 @@ class StudentInvoice
   def total
     @total ||= attendees.inject(0) do |total, attendee|
       price_detail = lesson_price_detail(attendee.lesson)
-      total += ((attendee.lesson.duration / 60) * price_detail.price_per_person) if is_attendance_billable?(attendee)
+      total += ((attendee.lesson.duration / 60.to_f) * price_detail.price_per_person) if is_attendance_billable?(attendee)
       total
     end
   end

@@ -3,11 +3,11 @@
 <%= form_tag group_invoice_path(@group.id), method: :get do %>
   <div>
     <%= label_tag :start_date %>
-    <%= select_date Date.today.at_beginning_of_month, prefix: :start_date %>
+    <%= select_date @start_date, prefix: :start_date %>
   </div>
   <div>
     <%= label_tag :end_date %>
-    <%= select_date Date.today, prefix: :end_date %>
+    <%= select_date @end_date, prefix: :end_date %>
   </div>
   <%= submit_tag "Generate", class: "btn btn-primary" %>
 <% end %>
