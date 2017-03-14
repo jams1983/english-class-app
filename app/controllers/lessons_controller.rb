@@ -13,8 +13,10 @@ class LessonsController < ApplicationController
   def create
     @lesson = group.lessons.new(lesson_params[:lesson])
     if @lesson.save
+      flash[:success] = "Lesson created successfully"
       redirect_to group_lessons_path(group.id)
     else
+      flash[:error] = @lesson.errors.full_messages.to_sentence
       attendance_options
       render :new
     end

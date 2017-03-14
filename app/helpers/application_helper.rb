@@ -8,4 +8,15 @@ module ApplicationHelper
   def minutes_to_hours(minutes)
     minutes / 60.to_f
   end
+
+  def map_flash_class(key)
+    case key
+    when "error", "alert"
+      "danger"
+    when "notice"
+      "success"
+    else
+      key
+    end
+  end
 end
