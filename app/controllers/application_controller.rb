@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
     if resource.is_a?(Admin)
       '/admin'
     else
-      root_path
+      groups_path
     end
   end
 
