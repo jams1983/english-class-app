@@ -2,6 +2,8 @@
 <h3><%= @lesson.date %></h3>
 <h3><%= @lesson.duration %> minutes</h3>
 
+<%= link_to "Edit lesson", edit_group_lesson_path(@group.id, @lesson.id), class: "btn btn-primary" %>
+
 <table class="table table-hover table-striped table-bordered">
   <thead>
     <tr>

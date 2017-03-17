@@ -23,17 +23,38 @@ class LessonsController < ApplicationController
   end
 
   def show
-    @lesson = group.lessons.includes(attendees: [:student, :attendance_option]).find(params[:id])
+    @lesson = find_lesson
+  end
+
+  def edit
+    @lesson = find_lesson
+    attendance_options
+  end
+
+  def update
+    @lesson = find_lesson
+    if @lesson.update_attributes(lesson_params[:lesson])
+      flash[:success] = "Lesson updated successfully"
+      redirect_to group_lesson_path(group.id, @lesson.id)
+    else
+      flash[:error] = @lesson.errors.full_messages.to_sentence
+      attendance_options
+      render :edit
+    end
   end
 
   private
 
+  def find_lesson
+    group.lessons.includes(attendees: [:student, :attendance_option]).find(params[:id])
+  end
+
   def attendance_options
-    @attendance_options = AttendanceOption.all
+    @attendance_options ||= AttendanceOption.all
   end
 
   def lesson_params
-    params.permit(lesson: [:date, :duration, attendees_attributes: [:attendance_option_id, :student_id]])
+    params.permit(lesson: [:date, :duration, attendees_attributes: [:id, :attendance_option_id, :student_id]])
   end
 
   def build_attendance_list(group, lesson)

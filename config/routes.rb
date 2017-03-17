@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   resources :groups, only: [:index, :show] do
-    resources :lessons, only: [:index, :new, :create, :show]
+    resources :lessons, except: [:delete]
     get :invoice
   end
 end

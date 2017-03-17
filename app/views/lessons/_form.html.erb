@@ -1,0 +1,27 @@
+<%= form_for [@group, @lesson], html: {class: "text-left"} do |form| %>
+  <div class="col-lg-6">
+    <div class="form-group">
+      <%= form.label :date, class: "control-label"%>
+      <div class="form-inline">
+        <%= form.date_select :date, {}, {class: "form-control"} %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= form.label :duration, class: "control-label" %>
+      <%= form.text_field :duration, class: "form-control" %>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <%= form.label :attendees %>
+    <%= form.fields_for :attendees do |attendee_form| %>
+      <div class="form-group">
+        <%= attendee_form.label :attendance_option_id, attendee_form.object.student.full_name, class: "control-label" %>
+        <%= attendee_form.select :attendance_option_id, options_from_collection_for_select(@attendance_options, :id, :description, attendee_form.object.attendance_option_id), {}, {class: "form-control"} %>
+        <%= attendee_form.hidden_field :student_id %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-lg-12 text-center">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
