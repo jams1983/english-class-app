@@ -1,7 +1,7 @@
 class LessonsController < ApplicationController
 
   def index
-    @lessons = group.lessons.order(created_at: :desc)
+    @lessons = group.lessons.order(date: :desc)
   end
 
   def new
