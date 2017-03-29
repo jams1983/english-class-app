@@ -3,7 +3,7 @@ class GroupsController < ApplicationController
   before_action :authenticate_user!, scope: :teacher
 
   def index
-    @groups = current_user_groups
+    @groups = current_user_groups.order(:name)
   end
 
   def show
