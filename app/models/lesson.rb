@@ -7,6 +7,8 @@ class Lesson < ApplicationRecord
   validates :date, presence: true
   validates :duration, presence: true
 
+  validates :date, uniqueness: {scope: :group_id, message: "has a lesson registered for this group"}
+
   accepts_nested_attributes_for :attendees
 
   def attendance_summary
