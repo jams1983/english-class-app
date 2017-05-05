@@ -12,16 +12,15 @@ class GroupsController < ApplicationController
 
   def invoice
     @group ||= current_user_groups.find(params[:group_id])
-    @start_date = parse_date_from_params(params[:start_date]) || Date.today.at_beginning_of_month
-    @end_date = parse_date_from_params(params[:end_date]) || Date.today
-    @invoice = GroupInvoice.new(@group, @start_date, @end_date)
+    @date = parse_date_from_params(params[:date]) || Date.today
+    @invoice = Invoice.new(@group, @date.beginning_of_month, @date.end_of_month)
   end
 
   private
 
   def parse_date_from_params(params_date)
     return nil if params_date.nil?
-    string_date = params_date.to_hash.values.join("-")
+    string_date = "#{params_date[:year]}-#{params_date[:month]}-1"
     Date.parse(string_date)
   end
 

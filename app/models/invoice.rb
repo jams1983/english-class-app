@@ -1,4 +1,4 @@
-class GroupInvoice
+class Invoice
 
   attr_accessor :start_date, :end_date, :group
 
@@ -21,15 +21,24 @@ class GroupInvoice
   end
 
   def student_invoices
-    @student_invoices ||= group.students.inject([]) do |invoices, student|
+    @student_invoices ||= students.inject([]) do |invoices, student|
       invoices << StudentInvoice.new(student, start_date, end_date)
     end
   end
 
   private
 
+  def students
+    @students ||= group_lessons.inject([]) do |students, lesson|
+      lesson.attendees.each do |attendee|
+        students << attendee.student unless students.include?(attendee.student)
+      end
+      students
+    end
+  end
+
   def group_lessons
-    group.lessons.where(date: (start_date..end_date))
+    @group_lessons ||= group.lessons.includes(:attendees).where(date: (start_date..end_date))
   end
 
 end

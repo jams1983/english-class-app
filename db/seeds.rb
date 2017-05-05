@@ -25,8 +25,9 @@ teacher = Teacher.create!(
 )
 p "Teacher created."
 
+students = []
 30.times do
-  Student.create!(
+  students << Student.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: Faker::Internet.email,
@@ -58,10 +59,11 @@ p "7 price details created."
 
 lessons = []
 20.times do
+  lesson_date = Faker::Date.between(90.days.ago, Date.today)
   lessons << Lesson.create!(
     group_id: groups.sample.id,
     duration: 90,
-    date: Date.today
+    date: lesson_date
   )
 end
 p "20 lessons created."
