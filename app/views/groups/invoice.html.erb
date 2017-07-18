@@ -1,19 +1,17 @@
 <h2><%= @group.name %> Invoice</h2>
 
-<%= form_tag group_invoice_path(@group.id), method: :get do %>
+<%= form_tag group_invoice_path(@group.id), method: :get, class: "form-inline" do %>
   <div class="form-group">
-    <%= label_tag :date, nil, class: "control-label" %>
-    <div class="form-inline">
-      <%= select_date @date, {prefix: :date, order: [:year, :month]}, {class: "form-control"} %>
-    </div>
+    <%= label_tag :date, nil %>
+    <%= select_date @date, { prefix: :date, order: [:year, :month] }, { class: "form-control custom" } %>
   </div>
   <%= submit_tag "Generate", class: "btn btn-primary" %>
 <% end %>
 
-<h3>Total: <%= number_to_currency(@invoice.total, precision: 0) %></h3>
-<h3>Hours: <%= minutes_to_hours(@invoice.duration) %></h3>
+<h3>Total: <%= number_to_currency(@invoice.total, precision: 0) %> <small>Hours: <%= minutes_to_hours(@invoice.duration) %></small></h3>
 
-<table class="table table-hover table-striped table-bordered">
+
+<table class="table table-hover table-striped">
   <thead>
     <tr>
       <th>Student</th>

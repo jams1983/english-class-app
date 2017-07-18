@@ -32,3 +32,8 @@ body{
 .navbar ul.session-section .logout-link{
   padding-left: 5px;
 }
+
+select.custom {
+  display: inline-block !important;
+  width: auto !important;
+}

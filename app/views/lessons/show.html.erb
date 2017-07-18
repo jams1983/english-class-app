@@ -1,10 +1,13 @@
-<h2>Group <%= @group.name %> lesson</h2>
-<h3><%= @lesson.date %></h3>
-<h3><%= @lesson.duration %> minutes</h3>
+<div class="clearfix">
+  <div class="pull-left">
+    <h2 class="hidden-xs">Lesson <%= @group.name %> <small><%= @lesson.date.strftime("%b %-d %Y") %> - <%= @lesson.duration %> minutes</small>
+    </h2>
+    <h3 class="visible-xs">Lesson <%= @group.name %> <small><%= @lesson.date.strftime("%b %-d %Y") %> - <%= @lesson.duration %> minutes</small></h3>
+  </div>
+  <%= link_to "Edit lesson", edit_group_lesson_path(@group.id, @lesson.id), class: "btn btn-primary pull-right" %>
+</div>
 
-<%= link_to "Edit lesson", edit_group_lesson_path(@group.id, @lesson.id), class: "btn btn-primary" %>
-
-<table class="table table-hover table-striped table-bordered">
+<table class="table table-hover table-striped">
   <thead>
     <tr>
       <th>Student</th>

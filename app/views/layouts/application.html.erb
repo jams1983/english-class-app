@@ -12,56 +12,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <%= link_to "Koombea", root_path, class: "navbar-brand" %>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><%= link_to "Groups", groups_path %></li>
-          </ul>
-          <ul class="pull-right session-section nav navbar-nav">
-            <% if current_user %>
-              <li>
-                <span class="current-user-name">
-                  <%= current_user.full_name %>
-                </span>
-              </li>
-              <li>
-                <span class="separator">|</span>
-              </li>
-              <li>
-                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "logout-link" %>
-              </li>
-            <% else %>
-              <li>
-                <%= link_to "Sign in", new_user_session_path %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-      </div>
-      <!-- /.container -->
-    </nav>
+    <%= render partial: 'shared/header' %>
     <div class="container">
-      <% flash.each do |key, value| %>
-        <div class="alert alert-<%= map_flash_class(key) %>">
-          <%= value %>
-        </div>
-        <% flash.discard %>
-      <% end %>
-      <div class="row">
-        <div class="col-lg-12">
-          <%= yield %>
-        </div>
-      </div>
+      <%= render partial: 'shared/messages' %>
+      <%= yield %>
+
     </div>
   </body>
 </html>
