@@ -37,3 +37,9 @@ select.custom {
   display: inline-block !important;
   width: auto !important;
 }
+
+textarea.note {
+  height: 280px !important;
+  width: 100%;
+  resize: none;
+}

@@ -54,7 +54,7 @@ class LessonsController < ApplicationController
   end
 
   def lesson_params
-    params.permit(lesson: [:date, :duration, attendees_attributes: [:id, :attendance_option_id, :student_id]])
+    params.permit(lesson: [:date, :duration, :note, attendees_attributes: [:id, :attendance_option_id, :student_id]])
   end
 
   def build_attendance_list(group, lesson)

@@ -23,3 +23,7 @@
     <% end %>
   </tbody>
 </table>
+<h4>Notes</h4>
+<p class="lead">
+  <%= @lesson.note.blank? ? 'There is not notes for this lesson' : @lesson.note %>
+</p>
