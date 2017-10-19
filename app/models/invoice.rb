@@ -26,6 +26,15 @@ class Invoice
     end
   end
 
+  def lessons_with_note
+    @lessons_note ||= group_lessons.inject([]) do |acc, lesson|
+      unless lesson.note.blank?
+        acc << lesson
+      end
+      acc
+    end
+  end
+
   private
 
   def students
@@ -40,5 +49,7 @@ class Invoice
   def group_lessons
     @group_lessons ||= group.lessons.includes(:attendees).where(date: (start_date..end_date))
   end
+
+
 
 end
