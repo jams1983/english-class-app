@@ -22,7 +22,7 @@ class Invoice
 
   def student_invoices
     @student_invoices ||= students.inject([]) do |invoices, student|
-      invoices << StudentInvoice.new(student, start_date, end_date)
+      invoices << StudentInvoice.new(student, start_date, end_date, group)
     end
   end
 

@@ -1,45 +1,59 @@
-<h2><%= @group.name %> Invoice</h2>
+<h2><%= @group.name %> Group <small><span class="label label-info"><%= @group.students.count%> students</span></small></h2>
 
-<%= form_tag group_invoice_path(@group.id), method: :get, class: "form-inline" do %>
-  <div class="form-group">
-    <%= label_tag :date, nil %>
-    <%= select_date @date, { prefix: :date, order: [:year, :month] }, { class: "form-control custom" } %>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Invoice</div>
+  <div class="panel-body">
+    <%= form_tag group_invoice_path(@group.id), method: :get, class: "form-inline" do %>
+      <div class="form-group">
+        <%= label_tag :date, nil %>
+        <%= select_date @date, { prefix: :date, order: [:year, :month] }, { class: "form-control custom" } %>
+      </div>
+      <%= submit_tag "Generate", class: "btn btn-primary" %>
+    <% end %>
+    <h3>Total: <%= number_to_currency(@invoice.total, precision: 0) %> <small>Hours: <%= minutes_to_hours(@invoice.duration) %></small></h3>
   </div>
-  <%= submit_tag "Generate", class: "btn btn-primary" %>
-<% end %>
 
-<h3>Total: <%= number_to_currency(@invoice.total, precision: 0) %> <small>Hours: <%= minutes_to_hours(@invoice.duration) %></small></h3>
-
-
-<table class="table table-hover table-striped">
-  <thead>
-    <tr>
-      <th>Student</th>
-      <th>Hours</th>
-      <th>Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @invoice.student_invoices.each do |invoice| %>
+  <!-- Table -->
+  <table class="table table-hover table-striped">
+    <thead>
       <tr>
-        <td><%= invoice.student.full_name %></td>
-        <td><%= minutes_to_hours(invoice.duration) %></td>
-        <td><%= number_to_currency(invoice.total, precision: 0) %></td>
+        <th>Student</th>
+        <th>Hours</th>
+        <th>Total</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @invoice.student_invoices.each do |invoice| %>
+        <tr>
+          <td><%= invoice.student.full_name %></td>
+          <td><%= minutes_to_hours(invoice.duration) %></td>
+          <td><%= number_to_currency(invoice.total, precision: 0) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% unless @invoice.lessons_with_note.blank? %>
+    <h4>Notes</h4>
+    <div class="list-group">
+      <% @invoice.lessons_with_note.each do |lesson| %>
+        <a href="<%= group_lesson_path(lesson.group, lesson)%>" class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <small><%= lesson.date.strftime("%b %-d, %Y")%></small>
+          </div>
+          <p class="mb-1"><%= lesson.note %></p>
+        </a>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 
-<% unless @invoice.lessons_with_note.blank? %>
-  <h4>Notes</h4>
-  <div class="list-group">
-    <% @invoice.lessons_with_note.each do |lesson| %>
-      <a href="<%= group_lesson_path(lesson.group, lesson)%>" class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="d-flex w-100 justify-content-between">
-          <small><%= lesson.date.strftime("%b %-d, %Y")%></small>
-        </div>
-        <p class="mb-1"><%= lesson.note %></p>
-      </a>
-    <% end %>
-  </div>
-<% end %>
+
+
+
+
+
+
+
+
+

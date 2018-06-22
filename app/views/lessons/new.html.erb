@@ -1,2 +1,9 @@
-<h1>New lesson <small><%= @group.name %></small> </h1>
-<%= render partial: 'form' %>
+<h2><%= @group.name %> Group <small><span class="label label-info"><%= @group.students.count%> students</span></small></h2>
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">New Lesson</div>
+  <div class="panel-body">
+    <%= render partial: 'form' %>
+  </div>
+</div>

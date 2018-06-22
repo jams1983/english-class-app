@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Size</th>
       <th class="hidden-xs hidden-sm">Students</th>
       <th>Actions</th>
     </tr>
@@ -13,7 +12,6 @@
     <% @groups.each do |group| %>
       <tr>
         <td><%= link_to group.name, group_path(group.id) %></td>
-        <td><%= group.students.count %></td>
         <td class="hidden-xs hidden-sm"><%= members_of(group) %></td>
         <td>
           <%= link_to "Lessons", group_lessons_path(group.id), class: "btn btn-primary btn-xs" %>

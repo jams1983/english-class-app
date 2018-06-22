@@ -1,7 +1,8 @@
 class LessonsController < ApplicationController
 
   def index
-    @lessons = group.lessons.order(date: :desc)
+    @date = parse_date_from_params(params[:date]) || Date.today
+    @lessons = group.lessons.where(date: @date.beginning_of_month..@date.end_of_month).order(date: :desc)
   end
 
   def new
@@ -65,6 +66,12 @@ class LessonsController < ApplicationController
 
   def group
     @group ||= current_user_groups.find(params[:group_id])
+  end
+
+  def parse_date_from_params(params_date)
+    return nil if params_date.nil?
+    string_date = "#{params_date[:year]}-#{params_date[:month]}-1"
+    Date.parse(string_date)
   end
 
 end

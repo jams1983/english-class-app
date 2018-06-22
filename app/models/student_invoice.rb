@@ -1,11 +1,12 @@
 class StudentInvoice
 
-  attr_accessor :start_date, :end_date, :student, :total, :hours
+  attr_accessor :start_date, :end_date, :student, :total, :hours, :group
 
-  def initialize(student, start_date, end_date)
+  def initialize(student, start_date, end_date, group)
     self.student = student
     self.start_date = start_date
     self.end_date = end_date
+    self.group = group
   end
 
   def total
@@ -45,7 +46,7 @@ class StudentInvoice
   end
 
   def attendees
-    @attendees ||= Attendee.joins(:lesson).includes(:lesson, :attendance_option).where(student_id: student.id, lessons: {date: (start_date..end_date)})
+    @attendees ||= Attendee.joins(:lesson).includes(:lesson, :attendance_option).where(student_id: student.id, lessons: {date: (start_date..end_date), group: group})
   end
 
 end

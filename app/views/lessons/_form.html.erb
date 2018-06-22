@@ -15,18 +15,20 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-6">
-      <%= form.label :attendees %>
+  <div class="row mb-1">
+    <div class="col-lg-6 col-sm-6">
+      <%= form.label :attendees%>
       <%= form.fields_for :attendees do |attendee_form| %>
         <div class="form-group">
-          <%= attendee_form.label :attendance_option_id, attendee_form.object.student.full_name, class: "control-label" %>
-          <%= attendee_form.select :attendance_option_id, options_from_collection_for_select(@attendance_options, :id, :description, attendee_form.object.attendance_option_id), {}, {class: "form-control"} %>
-          <%= attendee_form.hidden_field :student_id %>
+          <%= attendee_form.label :attendance_option_id, attendee_form.object.student.full_name, class: "control-label col-sm-6" %>
+          <div class="col-sm-6 mb-1">
+            <%= attendee_form.select :attendance_option_id, options_from_collection_for_select(@attendance_options, :id, :description, attendee_form.object.attendance_option_id), {}, {class: "form-control"} %>
+            <%= attendee_form.hidden_field :student_id %>
+          </div>
         </div>
       <% end %>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-sm-6">
       <%= form.label :note %>
       <%= form.text_area :note, class: "form-control note" %>
     </div>
@@ -34,6 +36,7 @@
   <div class="row">
     <div class="col-lg-12 text-center">
       <%= form.submit class: 'btn btn-primary' %>
+      <%= link_to 'Back to lessons', group_lessons_path(@group) %>
     </div>
   </div>
 <% end %>
