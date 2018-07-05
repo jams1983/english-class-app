@@ -1,12 +1,20 @@
 class StudentInvoice
 
-  attr_accessor :start_date, :end_date, :student, :total, :hours, :group
+  attr_accessor :start_date, :end_date, :student, :total, :hours, :group, :student_total, :koombea_total
 
   def initialize(student, start_date, end_date, group)
     self.student = student
     self.start_date = start_date
     self.end_date = end_date
     self.group = group
+  end
+
+  def student_total
+    @student_total ||= total * student_perc
+  end
+
+  def koombea_total
+    @koombea_total ||= total * koombea_perc
   end
 
   def total
@@ -47,6 +55,18 @@ class StudentInvoice
 
   def attendees
     @attendees ||= Attendee.joins(:lesson).includes(:lesson, :attendance_option).where(student_id: student.id, lessons: {date: (start_date..end_date), group: group})
+  end
+
+  def july_2018
+    "2018-07-01".to_date
+  end
+
+  def student_perc
+    @student_perc ||= start_date < july_2018 ? 0.5 : 0.75
+  end
+
+  def koombea_perc
+    @koombea_perc ||= start_date < july_2018 ? student_perc : 0.25
   end
 
 end

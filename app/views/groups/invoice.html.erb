@@ -4,15 +4,26 @@
   <!-- Default panel contents -->
   <div class="panel-heading">Invoice</div>
   <div class="panel-body">
-    <%= form_tag group_invoice_path(@group.id), method: :get, class: "form-inline" do %>
-      <div class="form-group">
-        <%= label_tag :date, nil %>
-        <%= select_date @date, { prefix: :date, order: [:year, :month] }, { class: "form-control custom" } %>
+    <div class="col-md-6">
+      <%= form_tag group_invoice_path(@group.id), method: :get, class: "form-inline" do %>
+        <div class="form-group">
+          <%= label_tag :date, nil %>
+          <%= select_date @date, { prefix: :date, order: [:year, :month] }, { class: "form-control custom" } %>
+        </div>
+        <%= submit_tag "Generate", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <div class="pull-right">
+        <%= link_to "Lessons", group_lessons_path(@group.id), class: "btn btn-primary" %>
+        <%= link_to "New lesson", new_group_lesson_path(@group.id), class: "btn btn-primary" %>
       </div>
-      <%= submit_tag "Generate", class: "btn btn-primary" %>
-    <% end %>
-    <h3>Total: <%= number_to_currency(@invoice.total, precision: 0) %> <small>Hours: <%= minutes_to_hours(@invoice.duration) %></small></h3>
+    </div>
+    <div class="col-md-12">
+      <h3>Total: <%= number_to_currency(@invoice.total, precision: 0) %> <small>Hours: <%= minutes_to_hours(@invoice.duration) %></small></h3>
+    </div>
   </div>
+
 
   <!-- Table -->
   <table class="table table-hover table-striped">
@@ -20,6 +31,8 @@
       <tr>
         <th>Student</th>
         <th>Hours</th>
+        <th>Student</th>
+        <th>Koombea</th>
         <th>Total</th>
       </tr>
     </thead>
@@ -28,6 +41,8 @@
         <tr>
           <td><%= invoice.student.full_name %></td>
           <td><%= minutes_to_hours(invoice.duration) %></td>
+          <td><%= number_to_currency(invoice.student_total, precision: 0) %></td>
+          <td><%= number_to_currency(invoice.koombea_total, precision: 0) %></td>
           <td><%= number_to_currency(invoice.total, precision: 0) %></td>
         </tr>
       <% end %>
