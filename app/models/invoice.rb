@@ -1,6 +1,6 @@
 class Invoice
 
-  attr_accessor :start_date, :end_date, :group
+  attr_accessor :start_date, :end_date, :group, :student_total, :koombea_total
 
   def initialize(group, start_date, end_date)
     self.group = group
@@ -9,8 +9,25 @@ class Invoice
   end
 
   def total
-    @total ||= student_invoices.inject(0) do |total, invoice|
-      total += invoice.total
+    @total ||= totals[:total]
+  end
+
+  def student_total
+    @student_total ||= totals[:student_total]
+  end
+
+  def koombea_total
+    @koombea_total ||= totals[:koombea_total]
+  end
+
+
+  def totals
+    @totals ||= student_invoices.inject({}) do |acc, inv|
+      [:total, :student_total, :koombea_total].each do |key|
+        acc[key] ||= 0
+        acc[key] += inv.send(key)
+      end
+      acc
     end
   end
 

@@ -46,6 +46,13 @@
           <td><%= number_to_currency(invoice.total, precision: 0) %></td>
         </tr>
       <% end %>
+      <tr>
+        <th></th>
+        <th></th>
+        <th><%= number_to_currency(@invoice.student_total, precision: 0) %></th>
+        <th><%= number_to_currency(@invoice.koombea_total, precision: 0) %></th>
+        <th><%= number_to_currency(@invoice.total, precision: 0) %></th>
+      </tr>
     </tbody>
   </table>
   <% unless @invoice.lessons_with_note.blank? %>
