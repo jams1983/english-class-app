@@ -10,19 +10,15 @@ class StudentInvoice
   end
 
   def student_total
-    @student_total ||= total * student_perc
+    @student_total ||= totals[:student]
   end
 
   def koombea_total
-    @koombea_total ||= total * koombea_perc
+    @koombea_total ||= totals[:koombea]
   end
 
   def total
-    @total ||= attendees.inject(0) do |total, attendee|
-      price_detail = lesson_price_detail(attendee.lesson)
-      total += ((attendee.lesson.duration / 60.to_f) * price_detail.price_per_person) if is_attendance_billable?(attendee)
-      total
-    end
+    @total ||= student_total + koombea_total
   end
 
   def duration
@@ -33,6 +29,18 @@ class StudentInvoice
   end
 
   private
+
+  def totals
+    @totals ||= attendees.inject({ koombea: 0, student: 0 }) do |acc, attendee|
+      price_detail = lesson_price_detail(attendee.lesson)
+      price_per_person = (attendee.lesson.duration / 60.to_f) * price_detail.price_per_person
+      if is_attendance_billable?(attendee)
+        acc[:koombea] += price_per_person * attendee.koombea_perc
+        acc[:student] += price_per_person * attendee.student_perc
+      end
+      acc
+    end
+  end
 
   def billable_attendees(lesson)
     lesson.attendees.inject([]) do |billables, attendee|
@@ -54,19 +62,8 @@ class StudentInvoice
   end
 
   def attendees
-    @attendees ||= Attendee.joins(:lesson).includes(:lesson, :attendance_option).where(student_id: student.id, lessons: {date: (start_date..end_date), group: group})
+    @attendees ||= Attendee.joins(:lesson)
+                            .includes(:lesson, :attendance_option)
+                            .where(student_id: student.id, lessons: {date: (start_date..end_date), group: group})
   end
-
-  def july_2018
-    "2018-07-01".to_date
-  end
-
-  def student_perc
-    @student_perc ||= start_date < july_2018 ? 0.5 : 0.75
-  end
-
-  def koombea_perc
-    @koombea_perc ||= start_date < july_2018 ? student_perc : 0.25
-  end
-
 end

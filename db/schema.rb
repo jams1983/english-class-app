@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018202856) do
+ActiveRecord::Schema.define(version: 20180815213052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,16 +35,20 @@ ActiveRecord::Schema.define(version: 20171018202856) do
   create_table "attendance_options", force: :cascade do |t|
     t.string   "description"
     t.boolean  "bill"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.float    "student_perc"
+    t.float    "koombea_perc"
   end
 
   create_table "attendees", force: :cascade do |t|
     t.integer  "student_id"
     t.integer  "lesson_id"
     t.integer  "attendance_option_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.float    "student_perc",         default: 0.0
+    t.float    "koombea_perc",         default: 0.0
   end
 
   create_table "events", force: :cascade do |t|
