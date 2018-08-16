@@ -51,7 +51,7 @@ class LessonsController < ApplicationController
   end
 
   def attendance_options
-    @attendance_options ||= AttendanceOption.all
+    @attendance_options ||= AttendanceOption.order(:id)
   end
 
   def lesson_params
