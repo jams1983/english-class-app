@@ -43,6 +43,9 @@ RailsAdmin.config do |config|
   end
 
   config.model Group do
+    list do
+      sort_by :level
+    end
 
     edit do
       exclude_fields :lessons
