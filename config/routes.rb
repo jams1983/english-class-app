@@ -9,4 +9,6 @@ Rails.application.routes.draw do
     resources :lessons, except: [:delete]
     get :invoice
   end
+
+  resources :attendees, only: [:index]
 end

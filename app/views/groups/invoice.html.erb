@@ -39,7 +39,7 @@
     <tbody>
       <% @invoice.student_invoices.each do |invoice| %>
         <tr>
-          <td><%= invoice.student.full_name %></td>
+          <td><%= link_to invoice.student.full_name, attendees_path(student_id: invoice.student.id, date: @date) %></td>
           <td><%= minutes_to_hours(invoice.duration) %></td>
           <td><%= number_to_currency(invoice.student_total, precision: 0) %></td>
           <td><%= number_to_currency(invoice.koombea_total, precision: 0) %></td>

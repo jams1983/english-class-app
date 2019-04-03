@@ -70,3 +70,7 @@ textarea.note {
 .mb-1 {
   margin-bottom: 10px;
 }
+
+td.currency {
+  text-align: right;
+}

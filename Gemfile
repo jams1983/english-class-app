@@ -5,10 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.4.1'
+ruby '2.5.3'
 
 gem 'coffee-rails', '~> 4.2'
-gem 'devise', '~> 4.2.0'
+gem 'devise', '~> 4.4.0'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 gem 'pg', '~> 0.18'

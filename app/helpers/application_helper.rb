@@ -19,4 +19,8 @@ module ApplicationHelper
       key
     end
   end
+
+  def student_invoice(attendee, lesson)
+    StudentInvoice.new(attendee.student, lesson.date.beginning_of_day, lesson.date.end_of_day, lesson.group)
+  end
 end

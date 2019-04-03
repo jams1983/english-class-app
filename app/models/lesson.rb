@@ -11,6 +11,10 @@ class Lesson < ApplicationRecord
 
   accepts_nested_attributes_for :attendees
 
+  def billable_attendees_amount
+    attendees.joins(:attendance_option).where(attendance_options: { bill: true }).count
+  end
+
   def attendance_summary
     attendance = attendees.joins(:attendance_option).group("attendance_options.description").count
     attendance.map {|reason, amount| "#{reason}: #{amount}"}.to_sentence

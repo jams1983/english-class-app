@@ -5,7 +5,7 @@
   <div class="panel-heading">Lesson - <%= @lesson.date.strftime("%b %-d %Y") %> - <%= @lesson.duration %> minutes</div>
   <div class="panel-body">
     <div class="col-md-10">
-      <%= @lesson.note.blank? ? 'There is not notes for this lesson' : @lesson.note %>
+      <%= @lesson.note.blank? ? 'There is no comments for this lesson' : @lesson.note %>
     </div>
     <div class="col-md-2">
       <%= link_to "Edit lesson", edit_group_lesson_path(@group.id, @lesson.id), class: "btn btn-primary pull-right" %>
