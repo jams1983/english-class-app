@@ -8,4 +8,5 @@ class Group < ApplicationRecord
   validates :name, :level, presence: true, uniqueness: true
 
   accepts_nested_attributes_for :students
+
 end
