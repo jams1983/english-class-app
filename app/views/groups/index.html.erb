@@ -1,23 +1,29 @@
 <h2>Groups</h2>
 
-<table class="table table-hover table-striped ">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th class="hidden-xs hidden-sm">Students</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @groups.each do |group| %>
-      <tr>
-        <td><%= link_to group.name, group_path(group.id) %></td>
-        <td class="hidden-xs hidden-sm"><%= members_of(group) %></td>
-        <td>
-          <%= link_to "Lessons", group_lessons_path(group.id), class: "btn btn-primary btn-xs" %>
-          <%= link_to "Invoice", group_invoice_path(group.id), class: "btn btn-primary btn-xs" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
+  <% @groups.each do |group| %>
+
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="panel panel-info">
+        <div class="panel-heading clearfix droppable" data-group="<%= group.id%>">
+          <div class="pull-left"><%= group.name %></div>
+          <div class="pull-right">
+            <%= link_to "Lessons", group_lessons_path(group.id), class: "card-link" %>
+            |
+            <%= link_to "Invoice", group_invoice_path(group.id), class: "card-link" %>
+          </div>
+
+        </div>
+        <ul class="list-group">
+          <% group.students.order('groups_users.id').each do |student| %>
+
+            <li class="list-group-item draggable" data-group="<%= group.id%>" data-student="<%= student.id%>">
+              <%= link_to student.full_name, attendees_path(student_id: student.id, date: @date) %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+

@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     get :invoice
   end
 
+  resources :students, only: :update
   resources :attendees, only: [:index]
 end
