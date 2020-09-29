@@ -16,19 +16,28 @@
     </div>
   </div>
   <div class="row mb-1">
-    <div class="col-lg-6 col-sm-6">
+    <div class="col-lg-12 col-sm-12">
       <%= form.label :attendees%>
-      <%= form.fields_for :attendees do |attendee_form| %>
-        <div class="form-group">
-          <%= attendee_form.label :attendance_option_id, attendee_form.object.student.full_name, class: "control-label col-sm-6" %>
-          <div class="col-sm-6 mb-1">
-            <%= attendee_form.select :attendance_option_id, options_from_collection_for_select(@attendance_options, :id, :description, attendee_form.object.attendance_option_id), {}, {class: "form-control"} %>
-            <%= attendee_form.hidden_field :student_id %>
+      <div class="row mb-1">
+        <%= form.fields_for :attendees do |attendee_form| %>
+          <div class="col-lg-6 col-sm-6">
+            <div class="form-group">
+              <%= attendee_form.label :attendance_option_id, attendee_form.object.student.full_name, class: "control-label col-sm-6" %>
+              <div class="col-sm-6 mb-1">
+                <%= attendee_form.select :attendance_option_id, options_from_collection_for_select(@attendance_options, :id, :description, attendee_form.object.attendance_option_id), {}, {class: "form-control"} %>
+                <%= attendee_form.hidden_field :student_id %>
+              </div>
+              <div class="col-sm-12 mb-1">
+                <%= attendee_form.text_area :note, rows: 3, class: "form-control note" %>
+              </div>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
-    <div class="col-lg-6 col-sm-6">
+  </div>
+  <div class="row mb-1">
+    <div class="col-lg-12 col-sm-12">
       <%= form.label :note %>
       <%= form.text_area :note, class: "form-control note" %>
     </div>

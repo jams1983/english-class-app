@@ -57,7 +57,7 @@ class LessonsController < EnglishController
   end
 
   def lesson_params
-    params.permit(lesson: [:date, :duration, :note, attendees_attributes: [:id, :attendance_option_id, :student_id]])
+    params.permit(lesson: [:date, :duration, :note, attendees_attributes: [:id, :attendance_option_id, :student_id, :note]])
   end
 
   def build_attendance_list(group, lesson)
