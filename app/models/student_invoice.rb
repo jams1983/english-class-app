@@ -23,7 +23,7 @@ class StudentInvoice
 
   def duration
     @duration ||= attendees.inject(0) do |duration, attendee|
-      duration += attendee.lesson.duration if is_attendance_billable?(attendee)
+      duration += attendee.lesson.duration if attendee.attendance_option.bill?
       duration
     end
   end
@@ -34,7 +34,7 @@ class StudentInvoice
     @totals ||= attendees.inject({ koombea: 0, student: 0 }) do |acc, attendee|
       price_detail = lesson_price_detail(attendee.lesson)
       price_per_person = (attendee.lesson.duration / 60.to_f) * price_detail.price_per_person
-      if is_attendance_billable?(attendee)
+      if attendee.attendance_option.bill?
         acc[:koombea] += price_per_person * attendee.koombea_perc
         acc[:student] += price_per_person * attendee.student_perc
       end
@@ -42,23 +42,16 @@ class StudentInvoice
     end
   end
 
-  def billable_attendees(lesson)
-    lesson.attendees.inject([]) do |billables, attendee|
-      billables << attendee if is_attendance_billable?(attendee)
-      billables
-    end
-  end
-
   def lesson_price_detail(lesson)
-    lesson.group.teacher.price_details.find_by(students_amount: billable_attendees(lesson).size)
+    students_amount = lesson.billable_attendees_amount
+    price_details = lesson.group.teacher.price_details
+    price_details.where('price_from <= ? AND students_amount = ?', lesson.date, students_amount)
+                 .order(price_from: :desc)
+                 .take
   end
 
   def students
     @students ||= group.students
-  end
-
-  def is_attendance_billable?(attendee)
-    attendee.attendance_option.bill?
   end
 
   def attendees
