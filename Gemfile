@@ -8,7 +8,7 @@ end
 ruby '2.7.1'
 
 gem 'coffee-rails', '~> 4.2'
-gem 'devise', '~> 4.4.0'
+gem 'devise', '~> 4.7.1'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 gem 'pg', '~> 0.18'
